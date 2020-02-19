@@ -1,19 +1,20 @@
 <template>
   <div id="app">
-    <RwvHeader />
+    <HomeIHeader />
     <router-view></router-view>
     <RwvFooter />
   </div>
 </template>
 
 <script>
-import RwvHeader from "@/components/TheHeader";
+// import RwvHeader from "@/components/TheHeader";
+import HomeIHeader from "@/components/HomeIHeader";
 import RwvFooter from "@/components/TheFooter";
 
 export default {
   name: "App",
   components: {
-    RwvHeader,
+    HomeIHeader,
     RwvFooter
   }
 };

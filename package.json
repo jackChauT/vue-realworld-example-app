@@ -1,13 +1,18 @@
 {
   "author": "Emmanuel Vilsbol <emmanuel@vilsbol.com>",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
+    "bootstrap-vue": "^2.4.2",
     "date-fns": "^1.30.1",
     "marked": "^0.7.0",
+    "moment": "^2.24.0",
     "register-service-worker": "^1.6.2",
-    "vue": "^2.6.10",
+    "vue": "^2.6.11",
     "vue-axios": "^2.1.4",
+    "vue-native-websocket": "^2.0.14",
     "vue-router": "^3.1.3",
+    "vue-socket.io": "^3.0.7",
     "vuex": "^3.1.1"
   },
   "description": "TodoMVC for the RealWorld™",
@@ -28,7 +33,7 @@
     "node-sass": "^4.12.0",
     "nyc": "^14.1.1",
     "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.11"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

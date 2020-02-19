@@ -7,7 +7,7 @@ export default new Router({
   routes: [
     {
       path: "/",
-      component: () => import("@/views/Home"),
+      component: () => import("@/views/HomeIHome"),
       children: [
         {
           path: "",
@@ -25,6 +25,11 @@ export default new Router({
           component: () => import("@/views/HomeTag")
         }
       ]
+    },
+    {
+      name: "face",
+      path: "/face",
+      component: () => import("@/views/Face")
     },
     {
       name: "login",
