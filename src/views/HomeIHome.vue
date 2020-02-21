@@ -6,20 +6,17 @@
     <div class="mx-auto bg-info" style="font-size:42px;min-width:500px;">Home-I:<b-alert show variant="secondary">
       <p class="text-right" :style="{maxHeight: windowHeight+'px', wordWrap: 'break-word', overflow: 'hidden'}">{{messageFromRobot}}</p>
     </b-alert></div> -->
-    <div class="mx-auto bg-info chat">
-      <b-alert show>
-        <div
-          :style="{
-            maxHeight: windowHeight + 'px',
-            wordWrap: 'break-word',
-            overflow: 'hidden'
-          }"
-        >
-          <div v-html="message" :style="style"></div>
-        </div>
-      </b-alert>
+    <div
+      :style="{
+        maxHeight: windowHeight + 'px',
+        wordWrap: 'break-word',
+        overflow: 'hidden',
+        marginRight: '70px',
+        marginLeft: '70px'
+      }"
+    >
+      <div v-html="message" :style="style"></div>
     </div>
-    <div class="container page"></div>
   </div>
 </template>
 

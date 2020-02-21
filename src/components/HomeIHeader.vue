@@ -1,6 +1,6 @@
 <template>
-  <nav class="navbar navbar-light">
-    <div class="container">
+  <nav class="navbar navbar-light hkt-header">
+    <div class="container hkt-header">
       <router-link class="navbar-brand" :to="{ name: 'home' }">
         Home I
       </router-link>
@@ -18,3 +18,8 @@ export default {
   }
 };
 </script>
+<style>
+.hkt-header {
+  background: white;
+}
+</style>

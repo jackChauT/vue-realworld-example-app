@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer class="hkt-footer">
     <div class="container">
       <router-link class="logo-font" :to="{ name: 'home', params: {} }">
         Home-I
@@ -13,3 +13,8 @@ export default {
   name: "RwvFooter"
 };
 </script>
+<style>
+.hkt-footer {
+  background: white;
+}
+</style>

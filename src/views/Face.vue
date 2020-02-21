@@ -1,22 +1,24 @@
 <template>
   <div class="face">
     <b-container class="bv-example-row">
-      <b-row v-if="person_data != null">
-        <b-col>
-          <img :src="person_data.image" class="face-base64-image" />
-        </b-col>
-        <b-col class="face-detail-text">
-          <b-row>ID: {{ person_data.personId }}</b-row>
-          <b-row>Name: {{ person_data.name }}</b-row>
-          <b-row>Category: {{ person_data.category }}</b-row>
-        </b-col>
-      </b-row>
+      <b-alert show variant="primary" v-if="person_data != null">
+        <b-row>
+          <b-col>
+            <img :src="person_data.image" class="face-base64-image" />
+          </b-col>
+          <b-col class="face-detail-text">
+            <b-row>ID: {{ person_data.personId }}</b-row>
+            <b-row>Name: {{ person_data.name }}</b-row>
+            <b-row>Category: {{ person_data.category }}</b-row>
+          </b-col>
+        </b-row>
+      </b-alert>
       <br />
       <b-alert
         show
         variant="success"
         v-for="face in facesResult"
-        :key="face.id"
+        :key="face.personId"
       >
         <b-row v-if="facesResult != null">
           <b-col>
@@ -85,6 +87,7 @@ export default {
             break;
           case "/data/mobile/face/records":
               that.facesResult = result.faces;
+              console.log(that.facesResult)
             break;
           default:
         }
