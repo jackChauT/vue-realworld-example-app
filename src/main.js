@@ -32,7 +32,10 @@ Vue.use(IconsPlugin);
 // }))
 Vue.use(VueNativeSock, "ws://192.168.66.106:4442", {
   store: store,
-  format: "json"
+  format: "json",
+  reconnection: true, // (Boolean) whether to reconnect automatically (false)
+  reconnectionAttempts: 5, // (Number) number of reconnection attempts before giving up (Infinity),
+  reconnectionDelay: 3000
 });
 
 ApiService.init();
