@@ -6,30 +6,14 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: "/",
-      component: () => import("@/views/HomeIHome"),
-      children: [
-        {
-          path: "",
-          name: "home",
-          component: () => import("@/views/HomeGlobal")
-        },
-        {
-          path: "my-feed",
-          name: "home-my-feed",
-          component: () => import("@/views/HomeMyFeed")
-        },
-        {
-          path: "tag/:tag",
-          name: "home-tag",
-          component: () => import("@/views/HomeTag")
-        }
-      ]
+      name: "home",
+      path: "/home",
+      component: () => import("@/views/HomeIHome")
     },
     {
-      name: "face",
-      path: "/face",
-      component: () => import("@/views/Face")
+      name: "greeting",
+      path: "/greeting",
+      component: () => import("@/views/Greeting")
     },
     {
       name: "login",

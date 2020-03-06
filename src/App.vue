@@ -14,6 +14,7 @@
 // import RwvHeader from "@/components/TheHeader";
 import HomeIHeader from "@/components/HomeIHeader";
 import RwvFooter from "@/components/TheFooter";
+import HKTWebsocket from "@/websocket/hktWebsocket.js";
 
 export default {
   name: "App",
@@ -26,6 +27,11 @@ export default {
       style: { height: `800px` },
       isShow: false
     };
+  },
+  methods: {
+    init() {
+      this.$options.sockets.onmessage = new HKTWebsocket(this).init();
+    }
   },
   mounted() {
     var that = this;
@@ -41,6 +47,7 @@ export default {
         58}px`;
       that.isShow = true;
       // that.style.marginTop = `${headerHeight}px`;
+      that.init();
     }, 500);
   }
 };

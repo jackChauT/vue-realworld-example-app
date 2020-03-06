@@ -15,15 +15,14 @@
         marginLeft: '70px'
       }"
     >
-      <div v-html="message" :style="style"></div>
+      <div v-html="messages" :style="style"></div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 import RwvTag from "@/components/VTag";
-// import { FETCH_TAGS } from "@/store/actions.type";
 
 export default {
   name: "home",
@@ -32,58 +31,26 @@ export default {
   },
   data: function() {
     return {
-      message: "Waiting for Command...",
       messageFromUser: "Waiting for Question...",
       messageFromRobot: "Waiting for Command...",
       windowHeight: 800,
-      delayInSec: 0.5,
-      style: { fontSize: "36px", textAlign: "center" }
+      delayInSec: 0.5
     };
   },
+  computed: {
+    messages() {
+      return this.$store.state.chat.messages;
+    },
+    style() {
+      return this.$store.state.chat.style;
+    }
+  },
   mounted() {
+    console.log();
     var that = this;
     setTimeout(function() {
       that.windowHeight = window.screen.height * 0.8;
     }, 1000);
-    // this.$store.dispatch(FETCH_TAGS);
-    this.$options.sockets.onmessage = function(data) {
-      if (typeof data.data === "undefined") return;
-      let result = JSON.parse(data.data);
-      console.log(result);
-      if (typeof result.method === "undefined") return;
-      switch (result.method) {
-        case "chat": {
-          let message = result.data.message.replace(/(?:\r\n|\r|\n)/g, "<br/>");
-          let isHuman = result.data.isHuman;
-          // console.log(result.data.message)
-          // console.log(this.style)
-          // if (message.toLowerCase() == "ok") return;
-          setTimeout(function() {
-            that.style = result.data.style;
-            that.message = message;
-          }, this.delayInSec * 1000);
-          if (isHuman == "true") {
-            setTimeout(function() {
-              that.messageFromUser = message;
-            }, 1000);
-          } else {
-            setTimeout(function() {
-              that.messageFromRobot = message;
-            }, 1000);
-          }
-          break;
-        }
-        default: {
-          break;
-        }
-      }
-    };
-  },
-  computed: {
-    ...mapGetters(["isAuthenticated", "tags"]),
-    tag() {
-      return this.$route.params.tag;
-    }
   }
 };
 </script>

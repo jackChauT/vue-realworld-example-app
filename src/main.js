@@ -30,7 +30,7 @@ Vue.use(IconsPlugin);
 //   },
 //   options: { path: "/website/" } //Optional options
 // }))
-Vue.use(VueNativeSock, "ws://192.168.66.106:4442", {
+Vue.use(VueNativeSock, "ws://192.168.66.135:4442", {
   store: store,
   format: "json",
   reconnection: true, // (Boolean) whether to reconnect automatically (false)
