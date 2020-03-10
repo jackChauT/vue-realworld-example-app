@@ -2,7 +2,7 @@
   <nav class="navbar navbar-light hkt-header">
     <div class="container hkt-header">
       <router-link class="navbar-brand" :to="{ name: 'home' }">
-        Home I
+        Home I {{ $t("GOOD_MORNING") }}
       </router-link>
     </div>
   </nav>

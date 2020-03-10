@@ -6,6 +6,7 @@
     <div class="mx-auto bg-info" style="font-size:42px;min-width:500px;">Home-I:<b-alert show variant="secondary">
       <p class="text-right" :style="{maxHeight: windowHeight+'px', wordWrap: 'break-word', overflow: 'hidden'}">{{messageFromRobot}}</p>
     </b-alert></div> -->
+    <!-- <div>{{ $t("GREETING_MASTER") }}</div> -->
     <div
       :style="{
         maxHeight: windowHeight + 'px',
@@ -51,6 +52,11 @@ export default {
     setTimeout(function() {
       that.windowHeight = window.screen.height * 0.8;
     }, 1000);
+
+    setTimeout(function() {
+      that.$i18n.locale = 'en'
+    }, 3000);
+
   }
 };
 </script>
