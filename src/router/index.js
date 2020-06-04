@@ -7,6 +7,11 @@ export default new Router({
   routes: [
     {
       name: "home",
+      path: "",
+      component: () => import("@/views/HomeIHome")
+    },
+    {
+      name: "home",
       path: "/home",
       component: () => import("@/views/HomeIHome")
     },

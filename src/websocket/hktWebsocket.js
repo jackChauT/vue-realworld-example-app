@@ -7,11 +7,13 @@ Vue.use(Vuex);
 export default class HKTWebsocket {
   constructor(superThis) {
     this.superThis = superThis;
+    this.canSwitchPage = true;
   }
 
   init() {
     console.log(`Current Page: ${router.currentRoute.name}`);
     var that = this.superThis;
+    let canSwitchPage = this.canSwitchPage;
     return function(data) {
       if (typeof data.data === "undefined") return;
       let result = JSON.parse(data.data);
@@ -49,11 +51,39 @@ export default class HKTWebsocket {
         case "/data/mobile/face/records":
           that.$store.commit("updatePeopleAtHome", result.faces);
           break;
+        case "switchPageAvailable": {
+          let canChange = result.data.canChange
+          canSwitchPage = canChange;
+          break;
+        }
         case "switchPage": {
-          let page = result.data;
-          if (router.currentRoute.name != page.toLowerCase()) {
-            router.push(page);
+          console.log(canSwitchPage)
+          if (!canSwitchPage) return
+          
+          let page = result.data.page;
+          let currentPage = router.currentRoute.name
+          if (currentPage == page.toLowerCase()) return
+          switch(page.toLowerCase()) {
+            case "chat":
+            case "home":
+              // delay 5 sec
+              if (currentPage == "greeting") {
+                setTimeout(function() {
+                  router.push(page);
+                }, 5 * 1000)
+              } else {
+                router.push(page);
+              }
+              break
+            case "greeting":
+              router.push(page);
+              break
+            case "schedule":
+              router.push(page);
+              break
+            default:
           }
+
           break;
         }
         default: {
