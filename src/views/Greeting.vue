@@ -1,36 +1,39 @@
 <template>
   <div class="face">
     <b-container class="bv-example-row">
-      <b-alert show variant="primary" v-if="person != null">
-        <b-row>
-          <b-col>
-            <img :src="person.image" class="face-base64-image" />
-          </b-col>
-          <b-col class="face-detail-text">
-            <b-row>Name: {{ person.name }}</b-row>
-            <b-row>Category: {{ person.category }}</b-row>
-          </b-col>
-        </b-row>
-      </b-alert>
+      <div>
+        <b-card id="face" no-body v-if="person != null">
+          <b-row no-gutters>
+            <b-col md="4" >
+              <img v-if="!isNoImage(person.image)" :src="person.image" class="face-base64-image-main" />
+            </b-col>
+            <b-col md="8">
+              <b-card-body>
+                <b-card-title>{{ person.name }}</b-card-title>
+                <b-card-text>
+                  <b-col class="face-detail-text">
+                    <b-row>Category: {{ person.category }}</b-row>
+                  </b-col>
+                </b-card-text>
+              </b-card-body>
+            </b-col>
+          </b-row>
+        </b-card>
+      </div>
       <br />
       <div v-for="event in events" :key="event.title">
         <Scheduler :event="event"></Scheduler>
       </div>
       <br />
-      <div v-if="peopleAtHome.length > 0">
-        <span class="face-person-title"> People at Home </span>
-        <div v-for="face in peopleAtHome" :key="face.personId">
-          <b-row>
-            <b-col>
-              <img :src="face.image" class="face-base64-image" />
-            </b-col>
-            <b-col>
-              <b-row>Name: {{ face.name }}</b-row>
-              <b-row>Category: {{ face.category }}</b-row>
-              <b-row>Time: {{ face.timestamp.replace("T", " ") }}</b-row>
-            </b-col>
-          </b-row>
-          <br />
+      <div id="peopleAtHome" v-show="peopleAtHome.length > 0">
+        <center class="face-person-title"> People at Home </center>
+        <div v-for="(person, index) in peopleAtHome" :key="person.personId">
+            <b-container class="">
+              <b-row class="">
+                <b-col><PeopleAtHome v-if="typeof peopleAtHomeGroup['even'][index] !='undefined' " :person="peopleAtHomeGroup['even'][index]"></PeopleAtHome></b-col>
+                <b-col><PeopleAtHome v-if="typeof peopleAtHomeGroup['odd'][index] !='undefined'" :person="peopleAtHomeGroup['odd'][index]"></PeopleAtHome></b-col>
+              </b-row>
+            </b-container>
         </div>
       </div>
     </b-container>
@@ -43,11 +46,13 @@ import axios from 'axios';
 import moment from 'moment';
 import router from "../router";
 import Scheduler from '../components/Schedule';
+import PeopleAtHome from '../components/PeopleAtHome';
 
 export default {
   name: 'greeting',
   components: {
-    Scheduler
+    Scheduler,
+    PeopleAtHome
   },
   data() {
     return  {
@@ -77,7 +82,12 @@ export default {
             }
           }]
         },
-      ]
+      ],
+      scrollSpeed: 5,
+      peopleAtHomeGroup: {
+        even: [],
+        odd: []
+      }
     }
   },
   computed: {
@@ -85,10 +95,41 @@ export default {
       return this.$store.state.greeting.currentPerson
     },
     peopleAtHome() {
-      return this.$store.state.greeting.peopleAtHome
+      let peopleAtHome = this.$store.state.greeting.peopleAtHome || null
+      console.log(peopleAtHome)
+      if (peopleAtHome.length > 0 && peopleAtHome != null) {
+        // let element = document.getElementById('nav-scroller')
+        // this.scrollByElement(element)
+        // this.scrollSpeed = peopleAtHome.length * 1.25
+        this.peopleAtHomeGroup['even'] = peopleAtHome.filter((key,index) => index % 2 == 0)
+        this.peopleAtHomeGroup['odd'] = peopleAtHome.filter((key,index) => index % 2 != 0)
+      }
+      return peopleAtHome.slice(0, 3);
+    },
+    eventList() {
+      let events = this.$store.state.greeting.events || null;
+      return events
     }
   },
   methods: {
+    isNoImage(src) {
+      return src.length < 30
+    },
+    scrollByElement(element, origin = 0) {
+      var that = this;
+      let waitingSeconds = 4 * 1000 // 4 sec
+      let scrollInterval = 25
+      setTimeout(function() {
+          element.scroll(0, origin)
+          let isReachedBottom = element['scrollHeight'] - origin < (waitingSeconds / scrollInterval)
+          console.log(`${element['scrollHeight']} - ${origin}`)
+          if (isReachedBottom) {
+            that.scrollByElement(element, 0)
+          } else {
+            that.scrollByElement(element, origin + that.scrollSpeed)
+          }
+        }, scrollInterval)
+    }
   },
   mounted() {
   }
@@ -96,14 +137,25 @@ export default {
 
 </script>
 <style>
+.face-base64-image-main {
+  max-height: 350px !important;
+  max-width: 200px !important;
+}
 .face-base64-image {
-  max-height: 500px;
-  max-width: 500px;
+  max-height: 200px !important;
+  max-width: 150px !important;
 }
 .face-detail-text {
   font-size: 25px
 }
 .face-person-title {
-  font-size: 26px
+  font-size: 26px;
+  margin-bottom: 10px
+}
+.face-scroll {
+  position: relative; 
+  border: #dfdfdf 1px solid;
+  max-height: 600px; 
+  overflow-y:scroll;
 }
 </style>
