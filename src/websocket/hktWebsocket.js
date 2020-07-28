@@ -64,17 +64,17 @@ export default class HKTWebsocket {
           let currentPage = router.currentRoute.name
           if (currentPage == page.toLowerCase()) return
           switch(page.toLowerCase()) {
-            case "chat":
-            case "home":
-              // delay 5 sec
-              if (currentPage == "greeting") {
-                setTimeout(function() {
-                  router.push(page);
-                }, 5 * 1000)
-              } else {
-                router.push(page);
-              }
-              break
+            // case "chat":
+            // case "home":
+            //   // delay 5 sec
+            //   if (currentPage == "greeting") {
+            //     setTimeout(function() {
+            //       router.push(page);
+            //     }, 5 * 1000)
+            //   } else {
+            //     router.push(page);
+            //   }
+            //   break
             case "greeting":
               router.push(page);
               break

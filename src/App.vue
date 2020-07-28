@@ -1,10 +1,10 @@
 <template>
-  <div id="app" class="hkt-style">
+  <div id="app" class="hkt-main-style">
     <HomeIHeader id="header" />
     <router-view
       v-if="isShow"
       :style="style"
-      style="display: flex;align-items: center;justify-content: center;"
+      class="hkt-main"
     ></router-view>
     <RwvFooter id="footer" />
   </div>
@@ -54,8 +54,12 @@ export default {
 </script>
 
 <style>
-.hkt-style {
-  background-color: white;
-  color: black;
+
+.hkt-main {
+  display: box;
+  align-items: center;
+  justify-content: center;
+  overflow-y:scroll;
+  color: black
 }
 </style>

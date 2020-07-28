@@ -4,10 +4,10 @@
       <div>
         <b-card id="face" no-body v-if="person != null">
           <b-row no-gutters>
-            <b-col md="4" >
+            <b-col md="3" >
               <img v-if="!isNoImage(person.image)" :src="person.image" class="face-base64-image-main" />
             </b-col>
-            <b-col md="8">
+            <b-col md="9">
               <b-card-body>
                 <b-card-title>{{ person.name }}</b-card-title>
                 <b-card-text>
@@ -28,8 +28,8 @@
       <div id="peopleAtHome" v-show="peopleAtHome.length > 0">
         <center class="face-person-title"> People at Home </center>
         <div v-for="(person, index) in peopleAtHome" :key="person.personId">
-            <b-container class="">
-              <b-row class="">
+            <b-container fluid>
+              <b-row >
                 <b-col><PeopleAtHome v-if="typeof peopleAtHomeGroup['even'][index] !='undefined' " :person="peopleAtHomeGroup['even'][index]"></PeopleAtHome></b-col>
                 <b-col><PeopleAtHome v-if="typeof peopleAtHomeGroup['odd'][index] !='undefined'" :person="peopleAtHomeGroup['odd'][index]"></PeopleAtHome></b-col>
               </b-row>

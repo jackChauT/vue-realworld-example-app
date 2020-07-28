@@ -7,6 +7,7 @@ import axios from "axios";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import "./assets/main.css";
 
 // import { CHECK_AUTH } from "./store/actions.type";
 import ApiService from "./common/api.service";
@@ -23,7 +24,7 @@ Vue.filter("error", ErrorFilter);
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueI18n);
-const server = "192.168.1.170";
+const server = "192.168.66.140";
 
 Vue.use(VueNativeSock, `ws://${server}:4442`, {
   store: store,

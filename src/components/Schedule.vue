@@ -7,11 +7,11 @@
               <b-card-text>
                 {{event.description}} <br />
                 In <b> {{event.location}} </b> <br />
-                From <b> {{event.startDate.split('T')[1]}}</b> to <b>{{event.endDate.split('T')[1]}} </b> 
+                From <b> {{formatDatetime(event.startDate)}}</b> to <b>{{formatDatetime(event.endDate)}} </b> 
                 <br />
                 <div v-if="event.elements">
                   <span>Distance: <b>{{event.elements[0]['distance']['text']}}</b></span> <br />
-                  <span>Estimated Travelling Time: <b>{{event.elements[0]['duration']['text']}}</b></span>
+                  <span>Estimated Travelling Time(By Car): <b>{{event.elements[0]['duration']['text']}}</b></span>
                 </div>
               </b-card-text>
             </b-card-body>
@@ -20,7 +20,7 @@
             <gmap-map
               :zoom="defaultZoom"
               :center="defaultCenter"
-              style="width: 120%; height: 200px"
+              style="width: 120%; height: 250px"
               :options="{
                 disableDefaultUI: true,
               }"
@@ -57,21 +57,25 @@ export default {
   },
   props: ['event'],
   methods:{
+    formatDatetime(datetime) {
+      let time = datetime.split('T')[1]
+      return time.split(":")[0] + ":" + time.split(":")[1]
+    }
   },
   mounted () {
     var that = this;
     this.$gmapApiPromiseLazy().then(() => {
     if (that.event.routes.length > 0) {
       that.path = new google.maps.geometry.encoding.decodePath(that.event.routes[0].overview_polyline.points)
-      let startMarker = that.path[0]
+      let originMarker = that.path[0]
       let destinationMarker = that.path[that.path.length - 1]
       that.destinationMarker = {
         lat: destinationMarker.lat(),
         lng: destinationMarker.lng()
       }
       that.defaultCenter = {
-        lat: (startMarker.lat() + destinationMarker.lat()) / 2,
-        lng: (startMarker.lng() + destinationMarker.lng()) / 2
+        lat: (originMarker.lat() + destinationMarker.lat()) / 2,
+        lng: (originMarker.lng() + destinationMarker.lng()) / 2
       }
     }
   });
